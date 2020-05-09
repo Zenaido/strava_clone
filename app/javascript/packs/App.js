@@ -4,16 +4,9 @@ import PropTypes from 'prop-types'
 import client from './utils/client';
 const App = props => (
   <ApolloProvider client={client}>
-     <div>App {props.name}!</div>
+     <div>Hello World!</div>
   </ApolloProvider>
  
 );
 export default  App ;
 
-App.defaultProps = {
-  name: 'David'
-}
-
-App.propTypes = {
-  name: PropTypes.string
-}
