@@ -4,21 +4,18 @@ This README would normally document whatever steps are necessary to get the
 application up and running.
 
 Things you may want to cover:
+* Install bundler if not installe
 
-* Ruby version
+Go into app directory from terminal
 
-* System dependencies
+* bundle
 
-* Configuration
+* rails db:create
 
-* Database creation
+In terminal window
+* bin/webpack-dev-server
 
-* Database initialization
+In other terminal window
+* rails s
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
