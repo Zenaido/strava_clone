@@ -65,6 +65,7 @@ gem "batch-loader", "~> 1.4"
 
 gem "pundit", "~> 2.1"
 
+gem "letter_opener", :group => :development
 gem "rgeo-geojson", "~> 2.1"
 
 gem "rgeo-proj4", "~> 2.0"
