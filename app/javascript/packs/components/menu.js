@@ -6,10 +6,28 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import {makeStyles} from '@material-ui/core/styles';
 import React from 'react';
+// import axios from 'axios';
+// const getToken = () =>
+  // document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 
+// const token = getToken();
+// axios.post(
+//   "/users/sign_in",
+//   {
+//     user: {
+//       email: "lzhernandez90@gmail.com",
+//       password: "Tackjkjk23obell4379!",
+//       password_confirmation: "Tackjkjk23obell4379!",
+//     },
+//   },
+//   {
+//     headers: {
+//       "X-CSRF-Token": token,
+//     },
+//   }
+// );
 const Menu = (props) => {
   const { open, anchorEl, handleClose, children } = props;
-  const l = React.Children.map(children, (child) => { return <MenuItem key={child} onClick={handleClose}>{child}</MenuItem>});
   return (
     <Popper open={open} anchorEl={anchorEl} role={undefined} transition disablePortal>
       {({ TransitionProps, placement }) => (
@@ -20,7 +38,7 @@ const Menu = (props) => {
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id='menu-list-grow'  >
-                    {l}
+                    {children}
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

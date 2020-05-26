@@ -5,35 +5,20 @@ import Toolbar from "@material-ui/core/Toolbar";
 import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
 import axios from "axios";
 import React, { Fragment } from "react";
-
+import MenuItem from '@material-ui/core/MenuItem';
 import Menu from "./menu";
+const getToken = () =>
+document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 
-// const token = getToken();
-// axios.post(
-//   "/users/sign_in",
-//   {
-//     user: {
-//       email: "lzhernandez90@gmail.com",
-//       password: "Tackjkjk23obell4379!",
-//       password_confirmation: "Tackjkjk23obell4379!",
-//     },
-//   },
-//   {
-//     headers: {
-//       "X-CSRF-Token": token,
-//     },
-//   }
-// );
 
 const useStyles = makeStyles({
   leftSide: { flex: 80 },
   rightSide: { flex: 4 },
 });
 
-const getToken = () =>
-  document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 
 const NavigationBar = (props) => {
+
   const classes = useStyles();
   const anchorRef = React.useRef(null);
   const [open, setOpen] = React.useState(false);
@@ -86,9 +71,33 @@ const NavigationBar = (props) => {
         open={Boolean(open)}
         handleClose={handleClose}
       >
-        <Fragment>Profile</Fragment>
-        <Fragment>My account</Fragment>
-        <Fragment>Logout</Fragment>
+        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <MenuItem onClick={(e)=> {
+          const token = getToken();
+          axios.post(
+            "/users/sign_in",
+            {
+              user: {
+                email: "lzhernandez90@gmail.com",
+                password: "Tackjkjk23obell4379!",
+                password_confirmation: "Tackjkjk23obell4379!",
+              },
+            },
+            {
+              headers: {
+                "X-CSRF-Token": token,
+              },
+            })
+        }}>Login</MenuItem>
+        <MenuItem onClick={async (e) => {
+          handleClose(e);
+           const token = getToken();
+          const response = await axios.get('/users/sign_out',  {
+            headers: {
+              "X-CSRF-Token": token,
+            },
+          });
+          console.log(response.status);}}>Logout</MenuItem>
       </Menu>
     </Fragment>
   );
