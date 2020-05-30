@@ -4,9 +4,12 @@ import IconButton from "@material-ui/core/IconButton";
 import Toolbar from "@material-ui/core/Toolbar";
 import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
 import axios from "axios";
-import React, { Fragment } from "react";
+import React, { Fragment,useState } from "react";
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from "./menu";
+import Login from './login';
+import { loggedInState } from '../state/logged_in';
+import { useRecoilValue,useSetRecoilState  } from 'recoil';
 const getToken = () =>
 document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 
@@ -18,6 +21,9 @@ const useStyles = makeStyles({
 
 
 const NavigationBar = (props) => {
+  const loggedIn = useRecoilValue(loggedInState);
+  const [loginModal, setLoginModal] = useState(false);
+  const setLoggedIn = useSetRecoilState(loggedInState);
 
   const classes = useStyles();
   const anchorRef = React.useRef(null);
@@ -48,7 +54,7 @@ const NavigationBar = (props) => {
 
     prevOpen.current = open;
   }, [open]);
-  console.log(open);
+
   return (
     <Fragment>
       <AppBar position="static">
@@ -72,9 +78,10 @@ const NavigationBar = (props) => {
         handleClose={handleClose}
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={(e)=> {
+        <MenuItem onClick={async (e)=> {
           const token = getToken();
-          axios.post(
+          setLoginModal(true);
+          const response = await axios.post(
             "/users/sign_in",
             {
               user: {
@@ -88,6 +95,9 @@ const NavigationBar = (props) => {
                 "X-CSRF-Token": token,
               },
             })
+            if (response.status === 200) {
+              setLoggedIn(true);
+            }
         }}>Login</MenuItem>
         <MenuItem onClick={async (e) => {
           handleClose(e);
@@ -97,8 +107,12 @@ const NavigationBar = (props) => {
               "X-CSRF-Token": token,
             },
           });
+          if (response.status === 200){
+            setLoggedIn(false);
+          }
           console.log(response.status);}}>Logout</MenuItem>
       </Menu>
+      <Login open={loginModal}/>
     </Fragment>
   );
 };

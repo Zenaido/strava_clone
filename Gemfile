@@ -69,3 +69,4 @@ gem "letter_opener", :group => :development
 gem "rgeo-geojson", "~> 2.1"
 
 gem "rgeo-proj4", "~> 2.0"
+gem "carrierwave", "~> 2.1"
