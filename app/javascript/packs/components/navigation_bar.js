@@ -4,21 +4,19 @@ import IconButton from "@material-ui/core/IconButton";
 import Toolbar from "@material-ui/core/Toolbar";
 import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
 import axios from "axios";
-import React, { Fragment,useState } from "react";
-import MenuItem from '@material-ui/core/MenuItem';
+import React, { Fragment, useState } from "react";
+import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "./menu";
-import Login from './login';
-import { loggedInState } from '../state/logged_in';
-import { useRecoilValue,useSetRecoilState  } from 'recoil';
+import Login from "./login";
+import { loggedInState } from "../state/logged_in";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 const getToken = () =>
-document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-
+  document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 
 const useStyles = makeStyles({
   leftSide: { flex: 80 },
   rightSide: { flex: 4 },
 });
-
 
 const NavigationBar = (props) => {
   const loggedIn = useRecoilValue(loggedInState);
@@ -78,41 +76,51 @@ const NavigationBar = (props) => {
         handleClose={handleClose}
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={async (e)=> {
-          const token = getToken();
-          setLoginModal(true);
-          const response = await axios.post(
-            "/users/sign_in",
-            {
-              user: {
-                email: "lzhernandez90@gmail.com",
-                password: "Tackjkjk23obell4379!",
-                password_confirmation: "Tackjkjk23obell4379!",
-              },
-            },
-            {
+        <MenuItem
+          onClick={async (e) => {
+            const token = getToken();
+            setLoginModal(true);
+            // const response = await axios.post(
+            //   "/users/sign_in",
+            //   {
+            //     user: {
+            //       email: "lzhernandez90@gmail.com",
+            //       password: "Tackjkjk23obell4379!",
+            //       password_confirmation: "Tackjkjk23obell4379!",
+            //     },
+            //   },
+            //   {
+            //     headers: {
+            //       "X-CSRF-Token": token,
+            //     },
+            //   }
+            // );
+            // if (response.status === 200) {
+            //   setLoggedIn(true);
+            // }
+          }}
+        >
+          Login
+        </MenuItem>
+        <MenuItem
+          onClick={async (e) => {
+            handleClose(e);
+            const token = getToken();
+            const response = await axios.get("/users/sign_out", {
               headers: {
                 "X-CSRF-Token": token,
               },
-            })
+            });
             if (response.status === 200) {
-              setLoggedIn(true);
+              setLoggedIn(false);
             }
-        }}>Login</MenuItem>
-        <MenuItem onClick={async (e) => {
-          handleClose(e);
-           const token = getToken();
-          const response = await axios.get('/users/sign_out',  {
-            headers: {
-              "X-CSRF-Token": token,
-            },
-          });
-          if (response.status === 200){
-            setLoggedIn(false);
-          }
-          console.log(response.status);}}>Logout</MenuItem>
+            console.log(response.status);
+          }}
+        >
+          Logout
+        </MenuItem>
       </Menu>
-      <Login open={loginModal}/>
+      <Login open={loginModal} />
     </Fragment>
   );
 };
