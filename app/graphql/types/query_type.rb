@@ -9,5 +9,10 @@ module Types
     def test_field
       "Hello World!"
     end
+
+    field :current_user, Types::UserType, null: true, description: 'return the signed in user null if not any'
+    def current_user
+      context[:current_user]
+    end
   end
 end

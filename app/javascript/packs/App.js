@@ -1,19 +1,23 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { ApolloProvider } from "react-apollo";
+import { RecoilRoot } from 'recoil';
 import { MuiThemeProvider as ThemeProvider } from "@material-ui/core/styles";
+import ApplicationContainer from './containers/application_container'
 import theme from "./utils/theme";
-import NavigationBar from "./components/navigation_bar";
 import client from "./utils/client";
-import Paper from "@material-ui/core/Paper";
 const App = (props) => {
+
+
   return (
+    <RecoilRoot>
     <ThemeProvider theme={theme}>
       <ApolloProvider client={client}>
-        <NavigationBar />
-        <div>Hello World!</div>
+        <ApplicationContainer/>
       </ApolloProvider>
     </ThemeProvider>
+    </RecoilRoot>
+
   );
 };
 

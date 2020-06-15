@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-  if Rails.env.development?
-    mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
-  end
-  post "/graphql", to: "graphql#execute"
+  devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }
+  mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/graphql' if Rails.env.development?
+  post '/graphql', to: 'graphql#execute'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  root "app#index"
-  match '*path', to: 'app#index', via: :all
+  root 'app#index'
+  post '/images/new', to: 'image#create'
+  get '*path', to: 'app#index', via: [:get]
 end
