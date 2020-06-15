@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_26_040921) do
+ActiveRecord::Schema.define(version: 2020_05_31_133638) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "postgis"
 
   create_table "pictures", force: :cascade do |t|
     t.string "imageable_type", null: false
@@ -23,6 +24,21 @@ ActiveRecord::Schema.define(version: 2020_05_26_040921) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "avatar"
     t.index ["imageable_type", "imageable_id"], name: "index_pictures_on_imageable_type_and_imageable_id"
+  end
+
+  create_table "points", force: :cascade do |t|
+    t.float "latitude"
+    t.float "longitude"
+    t.datetime "read_time"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "routes", force: :cascade do |t|
+    t.geometry "path", limit: {:srid=>0, :type=>"geometry"}
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.geography "route_2", limit: {:srid=>4326, :type=>"geometry", :geographic=>true}
   end
 
   create_table "users", force: :cascade do |t|

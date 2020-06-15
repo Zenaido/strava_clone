@@ -70,3 +70,5 @@ gem "rgeo-geojson", "~> 2.1"
 
 gem "rgeo-proj4", "~> 2.0"
 gem "carrierwave", "~> 2.1"
+
+gem "fit4ruby", "~> 3.5"
