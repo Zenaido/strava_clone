@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  use_doorkeeper
+
   devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }
   mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/graphql' if Rails.env.development?
   post '/graphql', to: 'graphql#execute'
@@ -9,3 +11,4 @@ Rails.application.routes.draw do
   post '/images/new', to: 'image#create'
   get '*path', to: 'app#index', via: [:get]
 end
+

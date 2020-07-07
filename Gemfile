@@ -72,3 +72,5 @@ gem "rgeo-proj4", "~> 2.0"
 gem "carrierwave", "~> 2.1"
 
 gem "fit4ruby", "~> 3.5"
+
+gem "doorkeeper", "~> 5.4"
