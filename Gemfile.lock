@@ -93,8 +93,12 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    doorkeeper (5.4.0)
+      railties (>= 5)
     erubi (1.9.0)
     ffi (1.12.2)
+    figaro (1.2.0)
+      thor (>= 0.14.0, < 2)
     fit4ruby (3.5.0)
       bindata (= 2.3.0)
     globalid (0.4.2)
@@ -259,6 +263,8 @@ DEPENDENCIES
   capybara (>= 2.15)
   carrierwave (~> 2.1)
   devise (~> 4.7)
+  doorkeeper (~> 5.4)
+  figaro (~> 1.2)
   fit4ruby (~> 3.5)
   graphiql-rails
   graphql (~> 1.10)
