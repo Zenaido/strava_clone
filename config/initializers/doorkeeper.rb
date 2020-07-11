@@ -7,25 +7,21 @@ Doorkeeper.configure do
   default_scopes :read
   optional_scopes :write
   enforce_configured_scopes
-  api_only
-  base_controller 'ActionController::API'
+  # api_only
+  # base_controller 'ActionController::API'
 
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do
     # raise "Please configure doorkeeper resource_owner_authenticator block located in #{__FILE__}"
     # Put your resource owner authentication logic here.
     # Example implementation:
-    byebug
-
     current_user || warden.authenticate!(scope: :user)
-    # User.first
   end
 
   # If you didn't skip applications controller from Doorkeeper routes in your application routes.rb
   # file then you need to declare this block in order to restrict access to the web interface for
   # adding oauth authorized applications. In other case it will return 403 Forbidden response
   # every time somebody will try to access the admin web interface.
-
 
   # admin_authenticator do |_routes|
   #   current_user || warden.authenticate!(scope: :user)
@@ -91,7 +87,6 @@ Doorkeeper.configure do
   # want to use API mode that will skip all the views management and change the way how
   # Doorkeeper responds to a requests.
   #
-
 
   # Enforce token request content type to application/x-www-form-urlencoded.
   # It is not enabled by default to not break prior versions of the gem.
@@ -225,7 +220,7 @@ Doorkeeper.configure do
   # `grant_type` - the grant type of the request (see Doorkeeper::OAuth)
   # `scopes` - the requested scopes (see Doorkeeper::OAuth::Scopes)
   #
-  # use_refresh_token
+  use_refresh_token
 
   # Provide support for an owner to be assigned to each registered application (disabled by default)
   # Optional parameter confirmation: true (default: false) if you want to enforce ownership of
@@ -437,9 +432,9 @@ Doorkeeper.configure do
   # so that the user skips the authorization step.
   # For example if dealing with a trusted application.
   #
-  # skip_authorization do |resource_owner, client|
-  #   client.superapp? or resource_owner.admin?
-  # end
+  skip_authorization do |_resource_owner, _client|
+    %w[Tb9N5YKWgN1Nhq8CCta-4Ax-DXU7SbvyjT3zxwT9Bts].include? _client.uid
+  end
 
   # Configure custom constraints for the Token Introspection request.
   # By default this configuration option allows to introspect a token by another

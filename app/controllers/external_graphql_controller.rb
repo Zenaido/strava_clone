@@ -1,24 +1,22 @@
 # frozen_string_literal: true
 
-class GraphqlController < ExternalController
+class ExternalGraphqlController < ExternalController
   before_action :doorkeeper_authorize!
   # If accessing from outside this domain, nullify the session
   # This allows for outside API access while preventing CSRF attacks,
   # but you'll have to authenticate your user separately
   # protect_from_forgery with: :null_session
   #
-  def me
-    respond_with current_resource_owner
-  end
 
   def execute
     variables = ensure_hash(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-        # Query context goes here, for example:
-        current_user: current_user
+      # Query context goes here, for example:
+      current_user: current_resource_owner
     }
+
     result = StravaCloneSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
   rescue StandardError => e
@@ -47,7 +45,6 @@ class GraphqlController < ExternalController
     end
   end
 
-
   def handle_error_in_development(e)
     logger.error e.message
     logger.error e.backtrace.join("\n")
@@ -56,7 +53,7 @@ class GraphqlController < ExternalController
   end
 
   # Find the user that owns the access token
-def current_resource_owner
-  User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
-end
+  def current_resource_owner
+    User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
+  end
 end

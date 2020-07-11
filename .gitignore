@@ -31,3 +31,7 @@ yarn-debug.log*
 .yarn-integrity
 log/development.log
 public/packs/manifest.json
+log/**
+# Ignore application configuration
+/config/application.yml
+.idea
