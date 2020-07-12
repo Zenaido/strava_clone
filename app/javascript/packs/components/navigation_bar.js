@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Link } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -6,7 +6,7 @@ import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
 import axios from "axios";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-
+import { useHistory } from "react-router-dom";
 import { getToken, loggedInState, setToken } from "../state/logged_in";
 
 import Menu from "./drop_down_menu";
@@ -31,7 +31,7 @@ const NavigationBar = (props) => {
   const token = getToken();
   const showLogin = useStateObserver((v) => v, loggedIn);
   const showLogout = useStateObserver((v) => !v, loggedIn);
-
+  const history = useHistory();
   const options = useRef([
     {
       label: "Login",
@@ -40,7 +40,12 @@ const NavigationBar = (props) => {
         setLoginModal(true);
       },
     },
-    { label: "Profile" },
+    {
+      label: "Profile",
+      onClick: () => {
+        history.push("/dashboard");
+      },
+    },
     {
       hidden: showLogout,
       label: "Logout",
@@ -63,7 +68,6 @@ const NavigationBar = (props) => {
     },
   ]);
   const classes = useStyles();
-
   return (
     <Fragment>
       <AppBar position="static">

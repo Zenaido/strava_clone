@@ -1,23 +1,25 @@
+import { MuiThemeProvider as ThemeProvider } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React from "react";
 import { ApolloProvider } from "react-apollo";
-import { RecoilRoot } from 'recoil';
-import { MuiThemeProvider as ThemeProvider } from "@material-ui/core/styles";
-import ApplicationContainer from './containers/application_container'
-import theme from "./utils/theme";
+import { BrowserRouter as Router } from "react-router-dom";
+import { RecoilRoot } from "recoil";
+
+import ApplicationContainer from "./containers/application_container";
 import client from "./utils/client";
+import theme from "./utils/theme";
+
 const App = (props) => {
-
-
   return (
     <RecoilRoot>
-    <ThemeProvider theme={theme}>
-      <ApolloProvider client={client}>
-        <ApplicationContainer/>
-      </ApolloProvider>
-    </ThemeProvider>
+      <Router>
+        <ThemeProvider theme={theme}>
+          <ApolloProvider client={client}>
+            <ApplicationContainer />
+          </ApolloProvider>
+        </ThemeProvider>
+      </Router>
     </RecoilRoot>
-
   );
 };
 

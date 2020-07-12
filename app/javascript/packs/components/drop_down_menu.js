@@ -57,7 +57,7 @@ const Menu = (props) => {
                 <MenuList autoFocusItem={open} id="menu-list-grow">
                   {options
                     .filter(({ hidden = false }) => !(hidden.current ?? hidden))
-                    .map(({ label, onClick = () => {} }) => (
+                    .map(({ label, onClick = () => {}, component }) => (
                       <MenuItem
                         key={label}
                         onClick={(e) => {
@@ -67,7 +67,7 @@ const Menu = (props) => {
                           }, transitionDuration);
                         }}
                       >
-                        {label}
+                        {component || label}
                       </MenuItem>
                     ))}
                 </MenuList>
