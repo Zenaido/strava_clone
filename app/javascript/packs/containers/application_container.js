@@ -27,6 +27,7 @@ const ApplicationContainer = (props) => {
       !loggedIn
     ) {
       setLoggedIn(true);
+      setCurrentUser(_.get(data, "currentUser"));
     } else if (!loading && loggedIn) {
       setLoggedIn(false);
     }
