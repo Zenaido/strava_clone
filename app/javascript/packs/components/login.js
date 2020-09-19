@@ -26,15 +26,17 @@ const Login = (props) => {
   const ref = useRef(null);
 
   return (
-    <Modal open={open} onClose={handleClose}>
+    <Modal open={open} onClose={handleClose} disableForceFocus>
       <Paper>
         <form>
-          <Grid container>
+          <Grid container >
             <Grid item md={12}>
               <h1>{isSignUp ? "Sign up" : "Login"}</h1>
             </Grid>
-            <Grid item md={12}>
+            <Grid item md={6}>
               <TextField
+              fullWidth
+              variant={'outlined'}
                 helperText={"Email"}
                 onChange={(e) => {
                   let text = e.target.value;
@@ -44,7 +46,10 @@ const Login = (props) => {
                   }));
                 }}
               />
+              </Grid>
+              <Grid item md={6}>
               <TextField
+              fullWidth
                 type="password"
                 helperText={"password"}
                 onChange={(e) => {
@@ -74,11 +79,6 @@ const Login = (props) => {
               </Grid>
             )}
 
-            <input
-              type="file"
-              accept="image/*"
-              ref={(r) => (ref.current = r)}
-            />
 
             <Button
               variant="contained"
