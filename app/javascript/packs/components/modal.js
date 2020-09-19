@@ -2,6 +2,15 @@ import React from "react";
 import MuiModal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 
+const Body = React.forwardRef((props, ref) => {
+  const { children } = props;
+  const classes = useStyles();
+  return (
+    <div className={classes.modalBody} ref={ref}>
+      {children}
+    </div>
+  );
+});
 const useStyles = makeStyles({
   modalBody: {
     position: "absolute",
@@ -12,10 +21,9 @@ const useStyles = makeStyles({
 });
 const Modal = (props) => {
   const { children, open, ...rest } = props;
-  const classes = useStyles();
   return (
     <MuiModal open={open} {...rest}>
-      <div className={classes.modalBody}>{children}</div>
+      <Body>{children}</Body>
     </MuiModal>
   );
 };

@@ -12,7 +12,7 @@ import { useRecoilValue } from "recoil";
 import Modal from "./modal";
 
 const useStyles = makeStyles({
-  grid: { padding: 10 },
+  grid: { padding: 30 },
 });
 const Login = (props) => {
   const { open, handleClose } = props;
@@ -26,26 +26,30 @@ const Login = (props) => {
   const ref = useRef(null);
 
   return (
-    <Modal open={open} container={document.body} onClose={handleClose}>
-      <Paper style={{ padding: 10 }}>
-        <FormControl>
-          <h1>{isSignUp ? "Sign up" : "Login"}</h1>
-          <Grid container>
-            <Grid className={classes.grid} item md={6}>
+    <Modal open={open} onClose={handleClose} disableForceFocus>
+      <Paper>
+        <form>
+          <Grid container >
+            <Grid item md={12}>
+              <h1>{isSignUp ? "Sign up" : "Login"}</h1>
+            </Grid>
+            <Grid item md={6}>
               <TextField
+              fullWidth
+              variant={'outlined'}
                 helperText={"Email"}
                 onChange={(e) => {
                   let text = e.target.value;
-                  console.log(e.target);
                   setFormData((prev) => ({
                     ...prev,
                     email: text,
                   }));
                 }}
               />
-            </Grid>
-            <Grid item md={6} className={classes.grid}>
+              </Grid>
+              <Grid item md={6}>
               <TextField
+              fullWidth
                 type="password"
                 helperText={"password"}
                 onChange={(e) => {
@@ -58,8 +62,9 @@ const Login = (props) => {
                 }}
               />
             </Grid>
+
             {isSignUp && (
-              <Grid item md={6} className={classes.grid}>
+              <Grid item md={6}>
                 <TextField
                   helperText={"Confirm Password"}
                   onChange={(e) => {
@@ -73,61 +78,48 @@ const Login = (props) => {
                 />
               </Grid>
             )}
-            <Grid item md={6} className={classes.grid}>
-              <input
-                type="file"
-                accept="image/*"
-                ref={(r) => (ref.current = r)}
-              />
-            </Grid>
-            <Grid
-              container
-              item
-              md={12}
-              className={classes.grid}
-              justify="center"
-            >
-              <Button
-                variant="contained"
-                color="primary"
-                // classes={{ root: classes.root }}
-                onClick={() => {
-                  setSignUp((prev) => !prev);
-                }}
-              >
-                {isSignUp ? "Login" : "Sign up"}
-              </Button>
 
-              <Button
-                onClick={async (e) => {
-                  e.preventDefault();
-                  const url = isSignUp ? "/users" : "/users/sign_in";
-                  const data = isSignUp
-                    ? formData
-                    : _.omit(formData, "password_confirmation");
-                  const response = await axios.post(
-                    url,
-                    { user: data },
-                    {
-                      headers: {
-                        "X-CSRF-Token": getToken(),
-                        "Content-Type": "application/json",
-                        Accept: "application/json",
-                      },
-                    }
-                  );
-                  handleClose(response);
-                }}
-                {..._.omit(props, "inputRef")}
-                ref={_.get(props, "inputRef")}
-                variant="contained"
-                color="primary"
-              >
-                Submit
-              </Button>
-            </Grid>
+
+            <Button
+              variant="contained"
+              color="primary"
+              // classes={{ root: classes.root }}
+              onClick={() => {
+                setSignUp((prev) => !prev);
+              }}
+            >
+              {isSignUp ? "Login" : "Sign up"}
+            </Button>
+
+            <Button
+              onClick={async (e) => {
+                e.preventDefault();
+                const url = isSignUp ? "/users" : "/users/sign_in";
+                const data = isSignUp
+                  ? formData
+                  : _.omit(formData, "password_confirmation");
+                const response = await axios.post(
+                  url,
+                  { user: data },
+                  {
+                    headers: {
+                      "X-CSRF-Token": getToken(),
+                      "Content-Type": "application/json",
+                      Accept: "application/json",
+                    },
+                  }
+                );
+                handleClose(response);
+              }}
+              {..._.omit(props, ["inputRef", "handleClose"])}
+              ref={_.get(props, "inputRef")}
+              variant="contained"
+              color="primary"
+            >
+              Submit
+            </Button>
           </Grid>
-        </FormControl>
+        </form>
       </Paper>
     </Modal>
   );
