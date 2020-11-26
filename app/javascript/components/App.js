@@ -5,9 +5,9 @@ import { ApolloProvider } from "react-apollo";
 import { BrowserRouter as Router } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 
-import ApplicationContainer from "./containers/application_container";
-import client from "./utils/client";
-import theme from "./utils/theme";
+import ApplicationContainer from "../containers/application_container";
+import client from "../utils/client";
+import theme from "../utils/theme";
 
 const App = (props) => {
   return (

@@ -32,14 +32,13 @@ const ApplicationContainer = (props) => {
       setLoggedIn(false);
     }
   }, [loading]);
-  console.log(data);
-
-  console.log("logged in", loggedIn);
 
   return (
     <Fragment>
       <NavigationBar />
-      <Dashboard />
+      <div className="min-h-full flex bg-white">
+        <Dashboard />
+      </div>
     </Fragment>
   );
 };

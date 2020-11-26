@@ -21,8 +21,8 @@ const useStateObserver = (modifier, value) => {
 };
 
 const useStyles = makeStyles({
-  leftSide: { flex: 80 },
-  rightSide: { flex: 4 },
+  leftSide: { flex: 1 },
+  rightSide: { flexGrow: 0 },
 });
 const NavigationBar = (props) => {
   const loggedIn = useRecoilValue(loggedInState);
@@ -70,28 +70,30 @@ const NavigationBar = (props) => {
   const classes = useStyles();
   return (
     <Fragment>
-      <AppBar position="static">
-        <Toolbar>
-          <div className={classes.leftSide}>Test</div>
-          <div className={classes.rightSide}>
-            <Menu
-              Container={(props) => {
-                const { anchorRef, onClick: handleToggle } = props;
-                return (
-                  <IconButton
-                    size="medium"
-                    ref={anchorRef}
-                    onClick={handleToggle}
-                  >
-                    <AccountCircleRoundedIcon htmlColor="white" />
-                  </IconButton>
-                );
-              }}
-              options={options.current}
-            />
-          </div>
-        </Toolbar>
-      </AppBar>
+      <div className="sticky top-0 bg-indigo-700 flex flex-1 text-2xl text-white font-sans">
+        <div
+          className={"flex-1 align-middle align-text-bottom m-auto mx-10 top-0"}
+        >
+          Test
+        </div>
+        <div className="flex-shrink-0 mx-8 focus:border-transparent ">
+          <Menu
+            Container={(props) => {
+              const { anchorRef, onClick: handleToggle } = props;
+              return (
+                <IconButton
+                  size="medium"
+                  ref={anchorRef}
+                  onClick={handleToggle}
+                >
+                  <AccountCircleRoundedIcon htmlColor="white" />
+                </IconButton>
+              );
+            }}
+            options={options.current}
+          />
+        </div>
+      </div>
 
       <Login
         open={loginModal}

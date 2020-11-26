@@ -16,17 +16,21 @@ export default function dashboard(props) {
   console.log(currentUser);
   return (
     match && (
-      <Grid container style={{ margin: 15 }}>
-        <Grid item md={4}>
-          <Card raised>
-            <CardHeader
-              action={<button>Test</button>}
-              title={<div>{currentUser?.name ?? "Luis Hernandez"}</div>}
-            />
-            Test
-          </Card>
-        </Grid>
-      </Grid>
+      <div className="max-w-2xl rounded-lg min-h-full flex-1 border-solid border-0 border-gray-900 shadow-3xl m-10">
+        <div className="m-10">test</div>
+      </div>
+
+      // <Grid container style={{ margin: 15 }}>
+      //   <Grid item md={4}>
+      //     <Card raised>
+      //       <CardHeader
+      //         action={<button>Test</button>}
+      //         title={<div>{currentUser?.name ?? "Luis Hernandez"}</div>}
+      //       />
+      //       Test
+      //     </Card>
+      //   </Grid>
+      // </Grid>
     )
   );
 }
